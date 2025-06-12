@@ -1,0 +1,12 @@
+server:
+  port: 9000
+spring:
+  config:
+    import: optional:file:.env[.properties]
+  application:
+    name: api
+  datasource:
+    url: ${MYSQL_URL}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: ${MYSQL_USER}
+    password: ${MYSQL_PASSWORD}
