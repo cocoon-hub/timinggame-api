@@ -4,7 +4,6 @@ import static org.assertj.core.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 import java.util.Optional;
-
 import org.junit.jupiter.api.Test;
 import org.timinggame.api.fixture.RoomFixture;
 import org.timinggame.api.room.RoomServiceUnitTest;
