@@ -1,0 +1,30 @@
+package org.timinggame.api.room.repository.impl;
+
+import java.util.Optional;
+
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.stereotype.Repository;
+import org.timinggame.api.room.domain.Room;
+import org.timinggame.api.room.repository.RoomRepository;
+
+import lombok.RequiredArgsConstructor;
+
+@Repository
+@RequiredArgsConstructor
+class RoomRepositoryV1 implements RoomRepository {
+
+	private final JdbcTemplate jdbcTemplate;
+
+	@Override
+	public Optional<Room> findById(final Long roomId) {
+		String sql = "SELECT * FROM game_room WHERE room_id = ?";
+		return Optional.ofNullable(jdbcTemplate.queryForObject(sql, new BeanPropertyRowMapper<>(Room.class), roomId));
+	}
+
+	@Override
+	public void startGame(final Room room) {
+		String sql = "UPDATE game_room SET status = ? WHERE game_room_id = ?";
+		jdbcTemplate.update(sql, room.getStatus().getValue(), room.getRoomId());
+	}
+}
