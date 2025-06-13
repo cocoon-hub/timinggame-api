@@ -1,5 +1,7 @@
 package org.timinggame.api.room.controller;
 
+import jakarta.validation.constraints.Positive;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -8,9 +10,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.timinggame.api.room.controller.response.CreateRoomRes;
 import org.timinggame.api.room.domain.Room;
 import org.timinggame.api.room.service.RoomService;
-
-import jakarta.validation.constraints.Positive;
-import lombok.RequiredArgsConstructor;
 
 @RequestMapping("/v1/room")
 @RestController

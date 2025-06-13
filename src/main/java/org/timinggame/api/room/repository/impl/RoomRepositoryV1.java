@@ -10,7 +10,7 @@ import org.timinggame.api.room.repository.RoomRepository;
 
 @Repository
 @RequiredArgsConstructor
-class RoomRepositoryV1 implements RoomRepository {
+public class RoomRepositoryV1 implements RoomRepository {
 
     private final JdbcTemplate jdbcTemplate;
 

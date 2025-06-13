@@ -11,7 +11,7 @@ import org.timinggame.api.room.service.RoomService;
 @Service
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
-class RoomServiceV1 implements RoomService {
+public class RoomServiceV1 implements RoomService {
 
     private final RoomRepository roomRepository;
 

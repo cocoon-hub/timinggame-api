@@ -10,7 +10,8 @@ class RoomTest {
     @Test
     void 게임을_시작하면_방의_상태는_진행중으로_변경된다() {
         // GIVEN
-        Room room = RoomFixture.waitingRoom();
+        final Long roomId = 1L;
+        Room room = RoomFixture.waitingRoom(roomId);
 
         // WHEN
         room.startGame();
