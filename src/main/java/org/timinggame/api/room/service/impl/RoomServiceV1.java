@@ -21,7 +21,10 @@ public class RoomServiceV1 implements RoomService {
         Room room =
                 roomRepository
                         .findById(roomId)
-                        .orElseThrow(() -> new NoRoomException("존재하지 않은 방입니다."));
+                        .orElseThrow(
+                                () ->
+                                        new NoRoomException(
+                                                String.format("%d번 방은 존재하지 않습니다.", roomId)));
         room.startGame();
         roomRepository.startGame(room);
         return room;

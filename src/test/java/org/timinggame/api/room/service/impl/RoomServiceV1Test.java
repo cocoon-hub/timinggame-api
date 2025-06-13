@@ -40,6 +40,6 @@ class RoomServiceV1Test extends RoomServiceUnitTest {
         // THEN
         assertThatThrownBy(() -> roomService.startGame(roomId))
                 .isInstanceOf(NoRoomException.class)
-                .hasMessage("존재하지 않은 방입니다.");
+                .hasMessage(String.format("%d번 방은 존재하지 않습니다.", roomId));
     }
 }
