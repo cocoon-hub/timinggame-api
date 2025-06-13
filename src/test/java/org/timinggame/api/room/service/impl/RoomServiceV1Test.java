@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 import java.util.Optional;
+
 import org.junit.jupiter.api.Test;
 import org.timinggame.api.fixture.RoomFixture;
 import org.timinggame.api.room.RoomServiceUnitTest;
@@ -35,7 +36,7 @@ class RoomServiceV1Test extends RoomServiceUnitTest {
         final Long roomId = 1L;
 
         // WHEN
-        when(roomRepository.findById(roomId)).thenReturn(Optional.ofNullable(null));
+        when(roomRepository.findById(roomId)).thenReturn(Optional.empty());
 
         // THEN
         assertThatThrownBy(() -> roomService.startGame(roomId))
