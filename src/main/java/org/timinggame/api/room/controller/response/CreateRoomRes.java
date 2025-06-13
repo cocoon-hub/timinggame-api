@@ -12,5 +12,5 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class CreateRoomRes {
 
-	private Long roomId;
+    private Long roomId;
 }

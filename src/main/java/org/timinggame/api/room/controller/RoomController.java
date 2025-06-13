@@ -1,5 +1,6 @@
 package org.timinggame.api.room.controller;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -9,20 +10,16 @@ import org.timinggame.api.room.controller.response.CreateRoomRes;
 import org.timinggame.api.room.domain.Room;
 import org.timinggame.api.room.service.RoomService;
 
-import lombok.RequiredArgsConstructor;
-
 @RequestMapping("/v1/room")
 @RestController
 @RequiredArgsConstructor
 public class RoomController {
 
-	private final RoomService roomService;
+    private final RoomService roomService;
 
-	@PostMapping("/start/{roomId}")
-	public ResponseEntity<CreateRoomRes> startGame(@PathVariable("roomId") Long roomId) {
-		Room room = roomService.startGame(roomId);
-		return ResponseEntity.ok(CreateRoomRes.builder()
-			.roomId(room.getRoomId())
-			.build());
-	}
+    @PostMapping("/start/{roomId}")
+    public ResponseEntity<CreateRoomRes> startGame(@PathVariable("roomId") Long roomId) {
+        Room room = roomService.startGame(roomId);
+        return ResponseEntity.ok(CreateRoomRes.builder().roomId(room.getRoomId()).build());
+    }
 }
