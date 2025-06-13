@@ -18,7 +18,16 @@ class RoomRepositoryV1 implements RoomRepository {
 
 	@Override
 	public Optional<Room> findById(final Long roomId) {
-		String sql = "SELECT * FROM game_room WHERE game_room_id = ?";
+		String sql = """
+			SELECT game_room_id as room_id,
+						       pin_code,
+						       status,
+						       loser_id,
+						       started_at,
+						       finished_at,
+						       created_at
+						FROM game_room WHERE game_room_id = ?
+			""";
 		return Optional.ofNullable(jdbcTemplate.queryForObject(sql, new BeanPropertyRowMapper<>(Room.class), roomId));
 	}
 

@@ -2,11 +2,16 @@ package org.timinggame.api.room.domain;
 
 import java.time.LocalDateTime;
 
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
 @Builder
+@AllArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Room {
 
 	private Long roomId;
