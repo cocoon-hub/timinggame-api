@@ -35,4 +35,21 @@ public class RoomRepositoryV1 implements RoomRepository {
 		String sql = "UPDATE game_room SET status = ? WHERE game_room_id = ?";
 		jdbcTemplate.update(sql, room.getStatus().getValue(), room.getRoomId());
 	}
+
+    @Override
+    public Optional<Room> findByPinCode(final String pinCode) {
+        String sql =
+                """
+				SELECT game_room_id as room_id,
+										       pin_code,
+										       status,
+										       loser_id,
+										       started_at,
+										       finished_at,
+										       created_at
+				FROM game_room WHERE pin_code = ?;
+				""";
+        return Optional.ofNullable(
+                jdbcTemplate.queryForObject(sql, new BeanPropertyRowMapper<>(Room.class), pinCode));
+    }
 }
