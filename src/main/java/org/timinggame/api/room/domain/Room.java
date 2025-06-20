@@ -13,15 +13,15 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Room {
 
-    private Long roomId;
-    private String pinCode;
-    private RoomStatus status;
-    private Long loserId;
-    private LocalDateTime startedAt;
-    private LocalDateTime finishedAt;
-    private LocalDateTime createdAt;
+	private Long roomId;
+	private String pinCode;
+	private RoomStatus status;
+	private Long loserId;
+	private LocalDateTime startedAt;
+	private LocalDateTime finishedAt;
+	private LocalDateTime createdAt;
 
-    public void startGame() {
-        this.status = RoomStatus.IN_PROGRESS;
-    }
+	public void startGame() {
+		this.status = RoomStatus.IN_PROGRESS;
+	}
 }

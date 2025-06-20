@@ -47,7 +47,7 @@ tasks.named('test') {
 spotless {
 	java {
 		target 'src/**/*.java'
-		googleJavaFormat().aosp()
+		eclipse().configFile(rootProject.file('naver-eclipse-formatter.xml'))
 		removeUnusedImports()
 		trimTrailingWhitespace()
 		endWithNewline()

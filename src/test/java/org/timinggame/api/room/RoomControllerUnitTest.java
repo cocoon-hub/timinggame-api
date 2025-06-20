@@ -6,5 +6,6 @@ import org.timinggame.api.room.service.RoomService;
 
 public abstract class RoomControllerUnitTest extends ControllerUnitTest {
 
-    @MockitoBean protected RoomService roomService;
+	@MockitoBean
+	protected RoomService roomService;
 }
