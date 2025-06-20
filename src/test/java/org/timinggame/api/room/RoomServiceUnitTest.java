@@ -8,7 +8,9 @@ import org.timinggame.api.room.service.impl.RoomServiceV1;
 
 public abstract class RoomServiceUnitTest extends ServiceUnitTest {
 
-    @InjectMocks protected RoomServiceV1 roomService;
+	@InjectMocks
+	protected RoomServiceV1 roomService;
 
-    @Mock protected RoomRepository roomRepository;
+	@Mock
+	protected RoomRepository roomRepository;
 }

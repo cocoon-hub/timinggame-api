@@ -13,33 +13,33 @@ import org.timinggame.api.room.exception.NoRoomException;
 
 class RoomServiceV1Test extends RoomServiceUnitTest {
 
-    @Test
-    void 게임을_시작할_때_방_상태를_진행중으로_변경한다() {
-        // GIVEN
-        final Long roomId = 1L;
-        final Room expect = RoomFixture.waitingRoom(roomId);
+	@Test
+	void 게임을_시작할_때_방_상태를_진행중으로_변경한다() {
+		// GIVEN
+		final Long roomId = 1L;
+		final Room expect = RoomFixture.waitingRoom(roomId);
 
-        // WHEN
-        when(roomRepository.findById(roomId)).thenReturn(Optional.ofNullable(expect));
-        Room actual = roomService.startGame(roomId);
+		// WHEN
+		when(roomRepository.findById(roomId)).thenReturn(Optional.ofNullable(expect));
+		Room actual = roomService.startGame(roomId);
 
-        // THEN
-        assertThat(actual).isNotNull();
-        assertThat(actual).isEqualTo(expect);
-        assertThat(actual.getStatus()).isEqualTo(RoomStatus.IN_PROGRESS);
-    }
+		// THEN
+		assertThat(actual).isNotNull();
+		assertThat(actual).isEqualTo(expect);
+		assertThat(actual.getStatus()).isEqualTo(RoomStatus.IN_PROGRESS);
+	}
 
-    @Test
-    void 게임을_시작할_때_존재하지_않는_방이면_예외를_던진다() {
-        // GIVEN
-        final Long roomId = 1L;
+	@Test
+	void 게임을_시작할_때_존재하지_않는_방이면_예외를_던진다() {
+		// GIVEN
+		final Long roomId = 1L;
 
-        // WHEN
-        when(roomRepository.findById(roomId)).thenReturn(Optional.empty());
+		// WHEN
+		when(roomRepository.findById(roomId)).thenReturn(Optional.empty());
 
-        // THEN
-        assertThatThrownBy(() -> roomService.startGame(roomId))
-                .isInstanceOf(NoRoomException.class)
-                .hasMessage(String.format("%d번 방은 존재하지 않습니다.", roomId));
-    }
+		// THEN
+		assertThatThrownBy(() -> roomService.startGame(roomId))
+			.isInstanceOf(NoRoomException.class)
+			.hasMessage(String.format("%d번 방은 존재하지 않습니다.", roomId));
+	}
 }

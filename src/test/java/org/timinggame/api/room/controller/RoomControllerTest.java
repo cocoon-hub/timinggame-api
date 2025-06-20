@@ -16,36 +16,36 @@ import org.timinggame.api.room.domain.Room;
 
 class RoomControllerTest extends RoomControllerUnitTest {
 
-    final String START_GAME_URL = "/v1/room/start/{roomId}";
+	final String START_GAME_URL = "/v1/room/start/{roomId}";
 
-    @Test
-    void 게임을_시작한다() throws Exception {
-        // GIVEN
-        final long roomId = 1L;
-        final Room room = RoomFixture.inProgressRoom(roomId, LocalDateTime.now(), null);
+	@Test
+	void 게임을_시작한다() throws Exception {
+		// GIVEN
+		final long roomId = 1L;
+		final Room room = RoomFixture.inProgressRoom(roomId, LocalDateTime.now(), null);
 
-        // WHEN
-        when(roomService.startGame(anyLong())).thenReturn(room);
+		// WHEN
+		when(roomService.startGame(anyLong())).thenReturn(room);
 
-        // THEN
-        mockMvc.perform(post(START_GAME_URL, roomId))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.roomId").value(roomId))
-                .andDo(print());
-    }
+		// THEN
+		mockMvc.perform(post(START_GAME_URL, roomId))
+			.andExpect(status().isOk())
+			.andExpect(jsonPath("$.roomId").value(roomId))
+			.andDo(print());
+	}
 
-    @RepeatedTest(5)
-    void 방_ID가_0이하면_예외가_발생한다() throws Exception {
-        // GIVEN
-        final Long roomId = -(new Random().nextLong(Long.MAX_VALUE));
-        final Room room = RoomFixture.inProgressRoom(roomId, LocalDateTime.now(), null);
+	@RepeatedTest(5)
+	void 방_ID가_0이하면_예외가_발생한다() throws Exception {
+		// GIVEN
+		final Long roomId = -(new Random().nextLong(Long.MAX_VALUE));
+		final Room room = RoomFixture.inProgressRoom(roomId, LocalDateTime.now(), null);
 
-        // WHEN
-        when(roomService.startGame(anyLong())).thenReturn(room);
+		// WHEN
+		when(roomService.startGame(anyLong())).thenReturn(room);
 
-        // THEN
-        mockMvc.perform(post(START_GAME_URL, roomId))
-                .andExpect(status().isBadRequest())
-                .andDo(print());
-    }
+		// THEN
+		mockMvc.perform(post(START_GAME_URL, roomId))
+			.andExpect(status().isBadRequest())
+			.andDo(print());
+	}
 }
