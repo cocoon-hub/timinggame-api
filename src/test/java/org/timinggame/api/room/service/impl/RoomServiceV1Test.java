@@ -53,10 +53,11 @@ class RoomServiceV1Test extends RoomServiceUnitTest {
         final Long roomId = 1L;
         final Room expect = RoomFixture.waitingRoom(roomId);
         final String pinCode = expect.getPinCode();
+        final int CURRENT_PLAYERS = 1;
 
         // WHEN
         when(roomRepository.findByPinCode(pinCode)).thenReturn(Optional.of(expect));
-        when(playerRepository.getPlayerCount(roomId)).thenReturn(1);
+        when(playerRepository.getPlayerCount(roomId)).thenReturn(CURRENT_PLAYERS);
         Room actual = roomService.verifyPinCode(pinCode);
 
         // THEN
