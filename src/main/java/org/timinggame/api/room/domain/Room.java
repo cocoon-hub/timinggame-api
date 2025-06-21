@@ -26,6 +26,6 @@ public class Room {
 	}
 
 	public boolean isStarted() {
-		return this.status == RoomStatus.IN_PROGRESS;
+		return RoomStatus.IN_PROGRESS.equals(this.status);
 	}
 }
