@@ -7,8 +7,8 @@ import org.timinggame.api.room.repository.PlayerRepository;
 public class PlayerRepositoryImpl implements PlayerRepository {
 
     @Override
-    public Long getPlayerCount(final Long roomId) {
+    public int getPlayerCount(final Long roomId) {
         // TODO: Redis 연결
-        return 0L;
+        return 0;
     }
 }
