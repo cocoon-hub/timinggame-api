@@ -24,4 +24,8 @@ public class Room {
 	public void startGame() {
 		this.status = RoomStatus.IN_PROGRESS;
 	}
+
+	public boolean isStarted() {
+		return RoomStatus.IN_PROGRESS.equals(this.status);
+	}
 }

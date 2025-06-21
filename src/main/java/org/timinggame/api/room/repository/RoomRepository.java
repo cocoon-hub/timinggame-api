@@ -8,4 +8,6 @@ public interface RoomRepository {
 	Optional<Room> findById(final Long roomId);
 
 	void startGame(final Room room);
+
+	Optional<Room> findByPinCode(final String pinCode);
 }

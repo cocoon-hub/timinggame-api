@@ -17,6 +17,7 @@ import org.timinggame.api.room.domain.Room;
 class RoomControllerTest extends RoomControllerUnitTest {
 
 	final String START_GAME_URL = "/v1/room/start/{roomId}";
+	final String ENTER_PIN_CODE_URL = "/v1/room/{pinCode}/enter";
 
 	@Test
 	void 게임을_시작한다() throws Exception {
@@ -46,6 +47,23 @@ class RoomControllerTest extends RoomControllerUnitTest {
 		// THEN
 		mockMvc.perform(post(START_GAME_URL, roomId))
 			.andExpect(status().isBadRequest())
+			.andDo(print());
+	}
+
+	@Test
+	void 유효한_게임_PIN을_입력한다() throws Exception {
+		// GIVEN
+		final long roomId = 1L;
+		final Room room = RoomFixture.waitingRoom(roomId);
+		final String pinCode = room.getPinCode();
+
+		// WHEN
+		when(roomService.verifyPinCode(pinCode)).thenReturn(room);
+
+		// THEN
+		mockMvc.perform(post(ENTER_PIN_CODE_URL, pinCode))
+			.andExpect(status().isOk())
+			.andExpect(jsonPath("$.roomId").value(roomId))
 			.andDo(print());
 	}
 }
