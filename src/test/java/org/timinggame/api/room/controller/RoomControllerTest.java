@@ -8,6 +8,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import java.time.LocalDateTime;
 import java.util.Random;
+
 import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
 import org.timinggame.api.fixture.RoomFixture;
@@ -39,9 +40,6 @@ class RoomControllerTest extends RoomControllerUnitTest {
 		// GIVEN
 		final Long roomId = -(new Random().nextLong(Long.MAX_VALUE));
 		final Room room = RoomFixture.inProgressRoom(roomId, LocalDateTime.now(), null);
-
-		// WHEN
-		when(roomService.startGame(anyLong())).thenReturn(room);
 
 		// THEN
 		mockMvc.perform(post(START_GAME_URL, roomId))
