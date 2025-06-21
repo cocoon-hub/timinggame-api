@@ -8,6 +8,6 @@ public class PlayerRepositoryV1 implements PlayerRepository {
 
     @Override
     public int getPlayerCount(final Long roomId) {
-        return 0;
+        throw new RuntimeException("TODO: NoSQL 연결이 필요합니다");
     }
 }
