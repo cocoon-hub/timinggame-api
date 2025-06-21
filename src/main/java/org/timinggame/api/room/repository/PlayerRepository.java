@@ -2,5 +2,5 @@ package org.timinggame.api.room.repository;
 
 public interface PlayerRepository {
 
-    int getPlayerCount(final Long roomId);
+	int getPlayerCount(final Long roomId);
 }

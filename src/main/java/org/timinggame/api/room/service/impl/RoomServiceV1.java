@@ -18,10 +18,10 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class RoomServiceV1 implements RoomService {
 
-    private final int MAX_PLAYERS_PER_ROOM = 50;
+	private final int MAX_PLAYERS_PER_ROOM = 50;
 
-    private final RoomRepository roomRepository;
-    private final PlayerRepository playerRepository;
+	private final RoomRepository roomRepository;
+	private final PlayerRepository playerRepository;
 
 	@Transactional
 	@Override
@@ -33,26 +33,24 @@ public class RoomServiceV1 implements RoomService {
 		return room;
 	}
 
-    @Override
-    public Room verifyPinCode(final String pinCode) {
-        Room room =
-                roomRepository
-                        .findByPinCode(pinCode)
-                        .orElseThrow(
-                                () ->
-                                        new NoPinCodeException(
-                                                String.format("%s는 존재하지 않는 코드입니다.", pinCode)));
+	@Override
+	public Room verifyPinCode(final String pinCode) {
+		Room room = roomRepository
+			.findByPinCode(pinCode)
+			.orElseThrow(
+				() -> new NoPinCodeException(
+					String.format("%s는 존재하지 않는 코드입니다.", pinCode)));
 
-        Long roomId = room.getRoomId();
+		Long roomId = room.getRoomId();
 
-        if (room.isStarted()) {
-            throw new AlreadyGameStartedException(String.format("%d번 방은 이미 게임이 시작되었습니다.", roomId));
-        }
+		if (room.isStarted()) {
+			throw new AlreadyGameStartedException(String.format("%d번 방은 이미 게임이 시작되었습니다.", roomId));
+		}
 
-        if (playerRepository.getPlayerCount(roomId) == MAX_PLAYERS_PER_ROOM) {
-            throw new RoomExceededException(String.format("%d번 방은 인원이 가득 찼습니다.", roomId));
-        }
+		if (playerRepository.getPlayerCount(roomId) == MAX_PLAYERS_PER_ROOM) {
+			throw new RoomExceededException(String.format("%d번 방은 인원이 가득 찼습니다.", roomId));
+		}
 
-        return room;
-    }
+		return room;
+	}
 }

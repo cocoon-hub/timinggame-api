@@ -12,5 +12,5 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class EnterPinCodeRes {
 
-    private Long roomId;
+	private Long roomId;
 }

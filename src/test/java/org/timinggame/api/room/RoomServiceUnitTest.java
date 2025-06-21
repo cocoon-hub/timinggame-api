@@ -15,5 +15,6 @@ public abstract class RoomServiceUnitTest extends ServiceUnitTest {
 	@Mock
 	protected RoomRepository roomRepository;
 
-    @Mock protected PlayerRepository playerRepository;
+	@Mock
+	protected PlayerRepository playerRepository;
 }

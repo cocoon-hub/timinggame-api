@@ -27,9 +27,10 @@ public class RoomController {
 		return ResponseEntity.ok(CreateRoomRes.builder().roomId(room.getRoomId()).build());
 	}
 
-    @PostMapping("/{pinCode}/enter")
-    public ResponseEntity<EnterPinCodeRes> enterPinCode(@PathVariable("pinCode") final String pinCode) {
-        Room room = roomService.verifyPinCode(pinCode);
-        return ResponseEntity.ok(EnterPinCodeRes.builder().roomId(room.getRoomId()).build());
-    }
+	@PostMapping("/{pinCode}/enter")
+	public ResponseEntity<EnterPinCodeRes> enterPinCode(@PathVariable("pinCode")
+	final String pinCode) {
+		Room room = roomService.verifyPinCode(pinCode);
+		return ResponseEntity.ok(EnterPinCodeRes.builder().roomId(room.getRoomId()).build());
+	}
 }
