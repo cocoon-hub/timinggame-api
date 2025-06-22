@@ -20,6 +20,7 @@ class RoomControllerTest extends RoomControllerUnitTest {
 
 	final String START_GAME_URL = "/v1/room/start/{roomId}";
 	final String ENTER_PIN_CODE_URL = "/v1/room/{pinCode}/enter";
+	final String FINISH_GAME_URL = "/v1/room/{roomId}/finish";
 
 	@Test
 	void 게임을_시작한다() throws Exception {
@@ -79,5 +80,20 @@ class RoomControllerTest extends RoomControllerUnitTest {
 			.andExpect(status().isOk())
 			.andExpect(jsonPath("$.roomId").value(roomId))
 			.andDo(print());
+	}
+
+	@Test
+	void 게임을_종료한다() throws Exception {
+		// GIVEN
+		final long roomId = 1L;
+		final Room room = RoomFixture.finishedRoom(roomId);
+
+		// WHEN
+		when(roomService.finishGame(anyLong())).thenReturn(room);
+
+		// THEN
+		mockMvc.perform(post(FINISH_GAME_URL, roomId))
+				.andExpect(status().isOk())
+				.andDo(print());
 	}
 }
