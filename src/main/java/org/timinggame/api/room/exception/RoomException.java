@@ -6,21 +6,21 @@ public abstract class RoomException extends RuntimeException {
 
 	public abstract HttpStatus getStatus();
 
-	public RoomException() {}
+	protected RoomException() {}
 
-	public RoomException(String message) {
+	protected RoomException(String message) {
 		super(message);
 	}
 
-	public RoomException(String message, Throwable cause) {
+	protected RoomException(String message, Throwable cause) {
 		super(message, cause);
 	}
 
-	public RoomException(Throwable cause) {
+	protected RoomException(Throwable cause) {
 		super(cause);
 	}
 
-	public RoomException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
+	protected RoomException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
 		super(message, cause, enableSuppression, writableStackTrace);
 	}
 }
