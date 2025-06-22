@@ -23,14 +23,14 @@ public class GlobalExceptionHandler {
 			.map(violation -> violation.getMessage())
 			.collect(Collectors.joining(", "));
 		return ResponseEntity.badRequest().body(
-			new ExceptionRes(req.getRequestURL().toString(), "유효성 검증에 실패했습니다.", message));
+			new ExceptionRes(req.getRequestURL().toString(), ex.getClass().getSimpleName(), message));
 	}
 
 	@ExceptionHandler(RoomException.class)
 	public ResponseEntity<ExceptionRes> handlerRoomException(HttpServletRequest req, RoomException ex) {
 		printLogFailedRequest(req);
 		return ResponseEntity.status(ex.getStatus()).body(
-			new ExceptionRes(req.getRequestURL().toString(), ex.getCause().toString(), ex.getMessage()));
+			new ExceptionRes(req.getRequestURL().toString(), ex.getClass().getSimpleName(), ex.getMessage()));
 	}
 
 	private void printLogFailedRequest(HttpServletRequest req) {
