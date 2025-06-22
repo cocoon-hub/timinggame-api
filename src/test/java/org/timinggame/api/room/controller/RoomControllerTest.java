@@ -41,7 +41,6 @@ class RoomControllerTest extends RoomControllerUnitTest {
 	void 게임을_시작할_때_존재하지_않는_방이면_예외를_던진다() throws Exception {
 		// GIVEN
 		final long roomId = 1L;
-		final Room room = RoomFixture.inProgressRoom(roomId, LocalDateTime.now(), null);
 
 		// WHEN
 		when(roomService.startGame(anyLong())).thenThrow(
