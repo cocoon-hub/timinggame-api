@@ -32,8 +32,7 @@ public class RoomRepositoryV1 implements RoomRepository {
 
 	@Override
 	public void startGame(final Room room) {
-		String sql = "UPDATE game_room SET status = ? WHERE game_room_id = ?";
-		jdbcTemplate.update(sql, room.getStatus().getValue(), room.getRoomId());
+		updateGameRoomStatus(room);
 	}
 
 	@Override
@@ -50,5 +49,15 @@ public class RoomRepositoryV1 implements RoomRepository {
 			""";
 		return Optional.ofNullable(
 			jdbcTemplate.queryForObject(sql, new BeanPropertyRowMapper<>(Room.class), pinCode));
+	}
+
+	@Override
+	public void finishGame(Room room) {
+		updateGameRoomStatus(room);
+	}
+
+	private void updateGameRoomStatus(Room room) {
+		String sql = "UPDATE game_room SET status = ? WHERE game_room_id = ?";
+		jdbcTemplate.update(sql, room.getStatus().getValue(), room.getRoomId());
 	}
 }

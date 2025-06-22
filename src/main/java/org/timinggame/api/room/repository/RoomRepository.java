@@ -10,4 +10,6 @@ public interface RoomRepository {
 	void startGame(final Room room);
 
 	Optional<Room> findByPinCode(final String pinCode);
+
+	void finishGame(Room room);
 }
