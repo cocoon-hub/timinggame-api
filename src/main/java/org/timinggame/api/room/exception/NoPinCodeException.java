@@ -1,5 +1,7 @@
 package org.timinggame.api.room.exception;
 
+import org.springframework.http.HttpStatus;
+
 public class NoPinCodeException extends RoomException {
 	public NoPinCodeException(String message) {
 		super(message);
@@ -21,5 +23,10 @@ public class NoPinCodeException extends RoomException {
 		boolean enableSuppression,
 		boolean writableStackTrace) {
 		super(message, cause, enableSuppression, writableStackTrace);
+	}
+
+	@Override
+	public HttpStatus getStatus() {
+		return HttpStatus.BAD_REQUEST;
 	}
 }

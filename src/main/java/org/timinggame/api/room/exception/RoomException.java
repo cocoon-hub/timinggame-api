@@ -1,8 +1,12 @@
 package org.timinggame.api.room.exception;
 
+import org.springframework.http.HttpStatus;
+
 public abstract class RoomException extends RuntimeException {
-	public RoomException() {
-	}
+
+	public abstract HttpStatus getStatus();
+
+	public RoomException() {}
 
 	public RoomException(String message) {
 		super(message);

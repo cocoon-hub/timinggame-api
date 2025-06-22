@@ -1,5 +1,7 @@
 package org.timinggame.api.room.exception;
 
+import org.springframework.http.HttpStatus;
+
 public class NoRoomException extends RoomException {
 	public NoRoomException(String message) {
 		super(message);
@@ -21,5 +23,10 @@ public class NoRoomException extends RoomException {
 		boolean enableSuppression,
 		boolean writableStackTrace) {
 		super(message, cause, enableSuppression, writableStackTrace);
+	}
+
+	@Override
+	public HttpStatus getStatus() {
+		return HttpStatus.BAD_REQUEST;
 	}
 }
