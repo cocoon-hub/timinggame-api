@@ -1,6 +1,6 @@
 package org.timinggame.api.room.exception;
 
-public class AlreadyGameStartedException extends RuntimeException {
+public class AlreadyGameStartedException extends RoomException {
 	public AlreadyGameStartedException(String message) {
 		super(message);
 	}

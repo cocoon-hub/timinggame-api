@@ -1,6 +1,6 @@
 package org.timinggame.api.room.exception;
 
-public class NoRoomException extends RuntimeException {
+public class NoRoomException extends RoomException {
 	public NoRoomException(String message) {
 		super(message);
 	}

@@ -1,6 +1,6 @@
 package org.timinggame.api.room.exception;
 
-public class NoPinCodeException extends RuntimeException {
+public class NoPinCodeException extends RoomException {
 	public NoPinCodeException(String message) {
 		super(message);
 	}
