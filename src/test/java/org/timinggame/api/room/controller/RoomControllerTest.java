@@ -14,6 +14,7 @@ import org.junit.jupiter.api.Test;
 import org.timinggame.api.fixture.RoomFixture;
 import org.timinggame.api.room.RoomControllerUnitTest;
 import org.timinggame.api.room.domain.Room;
+import org.timinggame.api.room.exception.NoRoomException;
 
 class RoomControllerTest extends RoomControllerUnitTest {
 
@@ -33,6 +34,22 @@ class RoomControllerTest extends RoomControllerUnitTest {
 		mockMvc.perform(post(START_GAME_URL, roomId))
 			.andExpect(status().isOk())
 			.andExpect(jsonPath("$.roomId").value(roomId))
+			.andDo(print());
+	}
+
+	@Test
+	void 게임을_시작할_때_존재하지_않는_방이면_예외를_던진다() throws Exception {
+		// GIVEN
+		final long roomId = 1L;
+		final Room room = RoomFixture.inProgressRoom(roomId, LocalDateTime.now(), null);
+
+		// WHEN
+		when(roomService.startGame(anyLong())).thenThrow(
+			new NoRoomException(String.format("%d번 방은 존재하지 않습니다.", roomId)));
+
+		// THEN
+		mockMvc.perform(post(START_GAME_URL, roomId))
+			.andExpect(status().isBadRequest())
 			.andDo(print());
 	}
 
