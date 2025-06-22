@@ -35,4 +35,11 @@ public class RoomController {
 		Room room = roomService.verifyPinCode(pinCode);
 		return ResponseEntity.ok(EnterPinCodeRes.builder().roomId(room.getRoomId()).build());
 	}
+
+	@PostMapping("/{roomId}/finish")
+	public ResponseEntity<Void> finishGame(@PathVariable("roomId") @Positive
+	final Long roomId) {
+		roomService.finishGame(roomId);
+		return ResponseEntity.ok().build();
+	}
 }
