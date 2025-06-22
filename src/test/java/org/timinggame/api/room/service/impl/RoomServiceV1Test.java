@@ -136,8 +136,8 @@ class RoomServiceV1Test extends RoomServiceUnitTest {
 
 		// THEN
 		assertThatThrownBy(() -> roomService.finishGame(roomId))
-				.isInstanceOf(NoRoomException.class)
-				.hasMessage(String.format("%d번 방은 존재하지 않습니다.", roomId));
+			.isInstanceOf(NoRoomException.class)
+			.hasMessage(String.format("%d번 방은 존재하지 않습니다.", roomId));
 	}
 
 	@Test
@@ -150,7 +150,7 @@ class RoomServiceV1Test extends RoomServiceUnitTest {
 
 		// THEN
 		assertThatThrownBy(() -> roomService.finishGame(roomId))
-				.isInstanceOf(AlreadyGameFinishedException.class)
-				.hasMessage(String.format("%d번 방은 이미 게임이 종료되었습니다.", roomId));
+			.isInstanceOf(AlreadyGameFinishedException.class)
+			.hasMessage(String.format("%d번 방은 이미 게임이 종료되었습니다.", roomId));
 	}
 }

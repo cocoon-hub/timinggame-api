@@ -93,7 +93,7 @@ class RoomControllerTest extends RoomControllerUnitTest {
 
 		// THEN
 		mockMvc.perform(post(FINISH_GAME_URL, roomId))
-				.andExpect(status().isOk())
-				.andDo(print());
+			.andExpect(status().isOk())
+			.andDo(print());
 	}
 }
