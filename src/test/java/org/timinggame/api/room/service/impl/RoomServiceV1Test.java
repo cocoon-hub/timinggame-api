@@ -124,6 +124,7 @@ class RoomServiceV1Test extends RoomServiceUnitTest {
 		assertThat(actual).isNotNull();
 		assertThat(actual).isEqualTo(expect);
 		assertThat(actual.getStatus()).isEqualTo(RoomStatus.FINISHED);
+		assertThat(actual.getFinishedAt()).isNotNull();
 	}
 
 	@Test
