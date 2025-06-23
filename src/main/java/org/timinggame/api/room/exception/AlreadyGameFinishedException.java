@@ -1,6 +1,8 @@
 package org.timinggame.api.room.exception;
 
-public class AlreadyGameFinishedException extends RuntimeException {
+import org.springframework.http.HttpStatus;
+
+public class AlreadyGameFinishedException extends RoomException {
 	public AlreadyGameFinishedException(String message) {
 		super(message);
 	}
@@ -21,5 +23,10 @@ public class AlreadyGameFinishedException extends RuntimeException {
 		boolean enableSuppression,
 		boolean writableStackTrace) {
 		super(message, cause, enableSuppression, writableStackTrace);
+	}
+
+	@Override
+	public HttpStatus getStatus() {
+		return HttpStatus.BAD_REQUEST;
 	}
 }
