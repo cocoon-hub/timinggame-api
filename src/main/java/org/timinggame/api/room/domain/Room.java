@@ -25,9 +25,10 @@ public class Room {
 		this.status = RoomStatus.IN_PROGRESS;
 	}
 
-	public void finishGame() {
+	public void finishGame() throws RuntimeException {
 		this.status = RoomStatus.FINISHED;
 		this.finishedAt = LocalDateTime.now();
+		// TODO: loserId를 초기화한다
 	}
 
 	public boolean isStarted() {
