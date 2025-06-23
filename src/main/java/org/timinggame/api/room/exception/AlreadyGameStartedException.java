@@ -1,6 +1,8 @@
 package org.timinggame.api.room.exception;
 
-public class AlreadyGameStartedException extends RuntimeException {
+import org.springframework.http.HttpStatus;
+
+public class AlreadyGameStartedException extends RoomException {
 	public AlreadyGameStartedException(String message) {
 		super(message);
 	}
@@ -22,4 +24,10 @@ public class AlreadyGameStartedException extends RuntimeException {
 		boolean writableStackTrace) {
 		super(message, cause, enableSuppression, writableStackTrace);
 	}
+
+	@Override
+	public HttpStatus getStatus() {
+		return HttpStatus.BAD_REQUEST;
+	}
+
 }

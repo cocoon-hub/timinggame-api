@@ -1,6 +1,8 @@
 package org.timinggame.api.room.exception;
 
-public class RoomExceededException extends RuntimeException {
+import org.springframework.http.HttpStatus;
+
+public class RoomExceededException extends RoomException {
 	public RoomExceededException(String message) {
 		super(message);
 	}
@@ -21,5 +23,10 @@ public class RoomExceededException extends RuntimeException {
 		boolean enableSuppression,
 		boolean writableStackTrace) {
 		super(message, cause, enableSuppression, writableStackTrace);
+	}
+
+	@Override
+	public HttpStatus getStatus() {
+		return HttpStatus.BAD_REQUEST;
 	}
 }
