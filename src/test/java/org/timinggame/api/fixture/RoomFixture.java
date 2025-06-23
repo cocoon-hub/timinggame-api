@@ -31,13 +31,13 @@ public final class RoomFixture {
 			.build();
 	}
 
-	public static Room finishedRoom(final Long roomId) {
+	public static Room finishedRoom(final Long roomId, final LocalDateTime startedAt, final LocalDateTime finishedAt) {
 		return Room.builder()
 			.roomId(roomId)
 			.pinCode("123456789")
 			.status(RoomStatus.FINISHED)
-			.startedAt(LocalDateTime.now())
-			.finishedAt(LocalDateTime.now())
+			.startedAt(startedAt)
+			.finishedAt(finishedAt)
 			.loserId(null)
 			.createdAt(LocalDateTime.now())
 			.build();

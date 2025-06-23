@@ -143,7 +143,7 @@ class RoomServiceV1Test extends RoomServiceUnitTest {
 	@Test
 	void 게임을_종료할_때_이미_종료된_방이면_예외를_던진다() {
 		final Long roomId = 1L;
-		final Room expect = RoomFixture.finishedRoom(roomId);
+		final Room expect = RoomFixture.finishedRoom(roomId, null, null);
 
 		// WHEN
 		when(roomRepository.findById(roomId)).thenReturn(Optional.ofNullable(expect));

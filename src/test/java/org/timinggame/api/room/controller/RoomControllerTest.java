@@ -86,7 +86,7 @@ class RoomControllerTest extends RoomControllerUnitTest {
 	void 게임을_종료한다() throws Exception {
 		// GIVEN
 		final long roomId = 1L;
-		final Room room = RoomFixture.finishedRoom(roomId);
+		final Room room = RoomFixture.finishedRoom(roomId, null, null);
 
 		// WHEN
 		when(roomService.finishGame(anyLong())).thenReturn(room);
