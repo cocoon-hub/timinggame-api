@@ -28,7 +28,8 @@ public class Room {
 	public void finishGame() throws RuntimeException {
 		this.status = RoomStatus.FINISHED;
 		this.finishedAt = LocalDateTime.now();
-		// TODO: loserId를 초기화한다
+		// TODO: loserId를 MongoDB에서 조회한다
+		this.loserId = 1L;
 	}
 
 	public boolean isStarted() {
