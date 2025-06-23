@@ -14,7 +14,7 @@ import org.junit.jupiter.api.Test;
 import org.timinggame.api.fixture.RoomFixture;
 import org.timinggame.api.room.RoomControllerUnitTest;
 import org.timinggame.api.room.domain.Room;
-import org.timinggame.api.room.exception.NoRoomException;
+import org.timinggame.api.room.exception.*;
 
 class RoomControllerTest extends RoomControllerUnitTest {
 
@@ -83,10 +83,62 @@ class RoomControllerTest extends RoomControllerUnitTest {
 	}
 
 	@Test
+	void 게임_PIN을_입력할_때_존재하지_않는_방이면_예외를_던진다() throws Exception {
+		// GIVEN
+		final long roomId = 1L;
+		final Room room = RoomFixture.waitingRoom(roomId);
+		final String pinCode = room.getPinCode();
+
+		// WHEN
+		when(roomService.verifyPinCode(pinCode)).thenThrow(new NoPinCodeException(
+			String.format("%s는 존재하지 않는 코드입니다.", pinCode)));
+
+		// THEN
+		mockMvc.perform(post(ENTER_PIN_CODE_URL, pinCode))
+			.andExpect(status().isBadRequest())
+			.andDo(print());
+	}
+
+	@Test
+	void 게임_PIN을_입력할_때_이미_게임이_시작된_방이면_예외를_던진다() throws Exception {
+		// GIVEN
+		final long roomId = 1L;
+		final Room room = RoomFixture.waitingRoom(roomId);
+		final String pinCode = room.getPinCode();
+
+		// WHEN
+		when(roomService.verifyPinCode(pinCode))
+			.thenThrow(new AlreadyGameStartedException(String.format("%d번 방은 이미 게임이 시작되었습니다.", roomId)));
+
+		// THEN
+		mockMvc.perform(post(ENTER_PIN_CODE_URL, pinCode))
+			.andExpect(status().isBadRequest())
+			.andDo(print());
+	}
+
+	@Test
+	void 게임_PIN을_입력할_때_인원이_가득_찬_방이면_예외를_던진다() throws Exception {
+		// GIVEN
+		final long roomId = 1L;
+		final Room room = RoomFixture.waitingRoom(roomId);
+		final String pinCode = room.getPinCode();
+
+		// WHEN
+		when(roomService.verifyPinCode(pinCode))
+			.thenThrow(new RoomExceededException(String.format("%d번 방은 인원이 가득 찼습니다.", roomId)));
+
+		// THEN
+		mockMvc.perform(post(ENTER_PIN_CODE_URL, pinCode))
+			.andExpect(status().isBadRequest())
+			.andDo(print());
+	}
+
+	@Test
 	void 게임을_종료한다() throws Exception {
 		// GIVEN
 		final long roomId = 1L;
-		final Room room = RoomFixture.finishedRoom(roomId, null, null);
+		final long loserId = 1L;
+		final Room room = RoomFixture.finishedRoom(roomId, null, null, loserId);
 
 		// WHEN
 		when(roomService.finishGame(anyLong())).thenReturn(room);
@@ -94,6 +146,37 @@ class RoomControllerTest extends RoomControllerUnitTest {
 		// THEN
 		mockMvc.perform(post(FINISH_GAME_URL, roomId))
 			.andExpect(status().isOk())
+			.andExpect(jsonPath("$.loserId").value(loserId))
+			.andDo(print());
+	}
+
+	@Test
+	void 게임을_종료할_때_존재하지_않는_방이면_예외를_던진다() throws Exception {
+		// GIVEN
+		final long roomId = 1L;
+
+		// WHEN
+		when(roomService.finishGame(anyLong()))
+			.thenThrow(new NoRoomException(String.format("%d번 방은 존재하지 않습니다.", roomId)));
+
+		// THEN
+		mockMvc.perform(post(FINISH_GAME_URL, roomId))
+			.andExpect(status().isBadRequest())
+			.andDo(print());
+	}
+
+	@Test
+	void 게임을_종료할_때_이미_종료된_방이면_예외를_던진다() throws Exception {
+		// GIVEN
+		final long roomId = 1L;
+
+		// WHEN
+		when(roomService.finishGame(anyLong()))
+			.thenThrow(new AlreadyGameFinishedException(String.format("%d번 방은 이미 게임이 종료되었습니다.", roomId)));
+
+		// THEN
+		mockMvc.perform(post(FINISH_GAME_URL, roomId))
+			.andExpect(status().isBadRequest())
 			.andDo(print());
 	}
 }
