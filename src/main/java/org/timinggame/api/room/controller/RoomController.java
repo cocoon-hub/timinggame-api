@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.timinggame.api.room.controller.response.EnterPinCodeRes;
+import org.timinggame.api.room.controller.response.FinishRoomRes;
 import org.timinggame.api.room.controller.response.StartGameRes;
 import org.timinggame.api.room.domain.Room;
 import org.timinggame.api.room.service.RoomService;
@@ -34,5 +35,12 @@ public class RoomController {
 	final String pinCode) {
 		Room room = roomService.verifyPinCode(pinCode);
 		return ResponseEntity.ok(EnterPinCodeRes.builder().roomId(room.getRoomId()).build());
+	}
+
+	@PostMapping("/{roomId}/finish")
+	public ResponseEntity<FinishRoomRes> finishGame(@PathVariable("roomId") @Positive
+	final Long roomId) {
+		Room room = roomService.finishGame(roomId);
+		return ResponseEntity.ok(FinishRoomRes.builder().loserId(room.getLoserId()).build());
 	}
 }

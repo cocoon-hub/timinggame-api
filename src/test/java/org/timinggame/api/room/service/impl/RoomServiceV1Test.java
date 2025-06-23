@@ -10,10 +10,7 @@ import org.timinggame.api.fixture.RoomFixture;
 import org.timinggame.api.room.RoomServiceUnitTest;
 import org.timinggame.api.room.domain.Room;
 import org.timinggame.api.room.domain.RoomStatus;
-import org.timinggame.api.room.exception.AlreadyGameStartedException;
-import org.timinggame.api.room.exception.NoPinCodeException;
-import org.timinggame.api.room.exception.NoRoomException;
-import org.timinggame.api.room.exception.RoomExceededException;
+import org.timinggame.api.room.exception.*;
 
 class RoomServiceV1Test extends RoomServiceUnitTest {
 
@@ -111,5 +108,52 @@ class RoomServiceV1Test extends RoomServiceUnitTest {
 		assertThatThrownBy(() -> roomService.verifyPinCode(pinCode))
 			.isInstanceOf(RoomExceededException.class)
 			.hasMessage(String.format("%d번 방은 인원이 가득 찼습니다.", roomId));
+	}
+
+	@Test
+	void 게임을_정상적으로_종료한다() {
+		// GIVEN
+		final Long roomId = 1L;
+		final Room expect = RoomFixture.inProgressRoom(roomId, null, null);
+
+		// WHEN
+		when(roomRepository.findById(roomId)).thenReturn(Optional.ofNullable(expect));
+		Room actual = roomService.finishGame(roomId);
+
+		// THEN
+		assertThat(actual).isNotNull();
+		assertThat(actual).isEqualTo(expect);
+		assertThat(actual.getStatus()).isEqualTo(RoomStatus.FINISHED);
+		assertThat(actual.getFinishedAt()).isNotNull();
+		assertThat(actual.getLoserId()).isNotNull();
+	}
+
+	@Test
+	void 게임을_종료할_때_존재하지_않는_방이면_예외를_던진다() {
+		// GIVEN
+		final Long roomId = 1L;
+
+		// WHEN
+		when(roomRepository.findById(roomId)).thenReturn(Optional.empty());
+
+		// THEN
+		assertThatThrownBy(() -> roomService.finishGame(roomId))
+			.isInstanceOf(NoRoomException.class)
+			.hasMessage(String.format("%d번 방은 존재하지 않습니다.", roomId));
+	}
+
+	@Test
+	void 게임을_종료할_때_이미_종료된_방이면_예외를_던진다() {
+		final Long roomId = 1L;
+		final Long loserId = 1L;
+		final Room expect = RoomFixture.finishedRoom(roomId, null, null, loserId);
+
+		// WHEN
+		when(roomRepository.findById(roomId)).thenReturn(Optional.ofNullable(expect));
+
+		// THEN
+		assertThatThrownBy(() -> roomService.finishGame(roomId))
+			.isInstanceOf(AlreadyGameFinishedException.class)
+			.hasMessage(String.format("%d번 방은 이미 게임이 종료되었습니다.", roomId));
 	}
 }
