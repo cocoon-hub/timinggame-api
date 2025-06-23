@@ -27,6 +27,7 @@ public class Room {
 
 	public void finishGame() {
 		this.status = RoomStatus.FINISHED;
+		this.finishedAt = LocalDateTime.now();
 	}
 
 	public boolean isStarted() {
