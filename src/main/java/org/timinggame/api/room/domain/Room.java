@@ -25,7 +25,7 @@ public class Room {
 		this.status = RoomStatus.IN_PROGRESS;
 	}
 
-	public void finishGame() throws RuntimeException {
+	public void finishGame() {
 		this.status = RoomStatus.FINISHED;
 		this.finishedAt = LocalDateTime.now();
 		// TODO: loserId를 MongoDB에서 조회한다
