@@ -111,7 +111,7 @@ class RoomServiceV1Test extends RoomServiceUnitTest {
 	}
 
 	@Test
-	void 게임을_종료할_때_방_상태를_FINISHED로_변경한다() {
+	void 게임을_정상적으로_종료한다() {
 		// GIVEN
 		final Long roomId = 1L;
 		final Room expect = RoomFixture.inProgressRoom(roomId, null, null);
@@ -125,6 +125,7 @@ class RoomServiceV1Test extends RoomServiceUnitTest {
 		assertThat(actual).isEqualTo(expect);
 		assertThat(actual.getStatus()).isEqualTo(RoomStatus.FINISHED);
 		assertThat(actual.getFinishedAt()).isNotNull();
+		assertThat(actual.getLoserId()).isNotNull();
 	}
 
 	@Test
@@ -144,7 +145,8 @@ class RoomServiceV1Test extends RoomServiceUnitTest {
 	@Test
 	void 게임을_종료할_때_이미_종료된_방이면_예외를_던진다() {
 		final Long roomId = 1L;
-		final Room expect = RoomFixture.finishedRoom(roomId, null, null);
+		final Long loserId = 1L;
+		final Room expect = RoomFixture.finishedRoom(roomId, null, null, loserId);
 
 		// WHEN
 		when(roomRepository.findById(roomId)).thenReturn(Optional.ofNullable(expect));
