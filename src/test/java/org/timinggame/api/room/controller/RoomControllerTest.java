@@ -12,15 +12,22 @@ import java.util.Random;
 import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
 import org.timinggame.api.fixture.RoomFixture;
+import org.timinggame.api.player.domain.PlayerDomain;
 import org.timinggame.api.room.RoomControllerUnitTest;
 import org.timinggame.api.room.domain.Room;
-import org.timinggame.api.room.exception.*;
+import org.timinggame.api.room.domain.RoomDomain;
+import org.timinggame.api.room.exception.AlreadyGameFinishedException;
+import org.timinggame.api.room.exception.AlreadyGameStartedException;
+import org.timinggame.api.room.exception.NoPinCodeException;
+import org.timinggame.api.room.exception.NoRoomException;
+import org.timinggame.api.room.exception.RoomExceededException;
 
 class RoomControllerTest extends RoomControllerUnitTest {
 
 	final String START_GAME_URL = "/v1/room/start/{roomId}";
 	final String ENTER_PIN_CODE_URL = "/v1/room/{pinCode}/enter";
 	final String FINISH_GAME_URL = "/v1/room/{roomId}/finish";
+	final String CREATE_ROOM_URL = "/v1/room/create";
 
 	@Test
 	void 게임을_시작한다() throws Exception {
@@ -177,6 +184,30 @@ class RoomControllerTest extends RoomControllerUnitTest {
 		// THEN
 		mockMvc.perform(post(FINISH_GAME_URL, roomId))
 			.andExpect(status().isBadRequest())
+			.andDo(print());
+	}
+
+	@Test
+	void 게임을_생성한다() throws Exception {
+		// GIVEN
+		final String nickname = "호스트";
+		final String pinCode = "123456";
+		final PlayerDomain host = PlayerDomain.ofNew(nickname);
+		final RoomDomain expected = RoomDomain.ofNew(pinCode, host);
+
+		// WHEN
+		when(roomService.createRoom(anyString())).thenReturn(expected);
+
+		// THEN
+		mockMvc.perform(post(CREATE_ROOM_URL)
+			.param("nickname", nickname))
+			.andExpect(status().isOk())
+			.andExpect(status().isOk())
+			.andExpect(jsonPath("$.roomId").value(expected.getId()))
+			.andExpect(jsonPath("$.pinCode").value(expected.getPinCode()))
+			.andExpect(jsonPath("$.host.id").value(expected.getHost().getId()))
+			.andExpect(jsonPath("$.host.nickname").value(expected.getHost().getNickname()))
+			.andExpect(jsonPath("$.host.ready").value(expected.getHost().isReady()))
 			.andDo(print());
 	}
 }
