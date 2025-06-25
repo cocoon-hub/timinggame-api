@@ -6,6 +6,7 @@ import static org.mockito.Mockito.*;
 import java.util.concurrent.TimeUnit;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -59,4 +60,15 @@ class PinCodeAdvisorTest {
 		verify(redisTemplate, times(1)).hasKey("room:pin-code:" + pinCode);
 	}
 
+	@RepeatedTest(20)
+	void PIN_CODE는_azAz09_사이_문자로_구성된다() {
+		// WHEN
+		when(redisTemplate.hasKey(anyString())).thenReturn(false);
+		doNothing().when(valueOperations).set(anyString(), any(), eq(10L), eq(TimeUnit.MINUTES));
+
+		String pinCode = pinCodeAdvisor.generateUniquePinCode();
+
+		// THEN
+		assertThat(pinCode).matches("[a-zA-Z0-9]{6}$");
+	}
 }
