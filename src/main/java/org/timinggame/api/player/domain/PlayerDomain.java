@@ -3,13 +3,14 @@ package org.timinggame.api.player.domain;
 import java.util.Objects;
 import java.util.UUID;
 
+import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 
 @Getter
-@Builder
-@AllArgsConstructor
+@Builder(access = AccessLevel.PRIVATE)
+@AllArgsConstructor(access = AccessLevel.PROTECTED)
 public class PlayerDomain {
 
 	private String id;
