@@ -1,18 +1,27 @@
 package org.timinggame.api.room.service.impl;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.timinggame.api.player.domain.Player;
-import org.timinggame.api.room.domain.Room;
-import org.timinggame.api.room.exception.*;
+import org.timinggame.api.player.domain.PlayerDomain;
 import org.timinggame.api.player.repository.PlayerRepository;
+import org.timinggame.api.room.domain.Room;
+import org.timinggame.api.room.domain.RoomDomain;
+import org.timinggame.api.room.exception.AlreadyGameFinishedException;
+import org.timinggame.api.room.exception.AlreadyGameStartedException;
+import org.timinggame.api.room.exception.NoPinCodeException;
+import org.timinggame.api.room.exception.NoRoomException;
+import org.timinggame.api.room.exception.RoomExceededException;
 import org.timinggame.api.room.repository.RoomRepository;
+import org.timinggame.api.room.repository.redis.RoomDto;
+import org.timinggame.api.room.repository.redis.RoomRedisRepository;
 import org.timinggame.api.room.service.RoomService;
+import org.timinggame.api.room.util.PinCodeAdvisor;
 
 import lombok.RequiredArgsConstructor;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Service
 @Transactional(readOnly = true)
@@ -23,6 +32,8 @@ public class RoomServiceV1 implements RoomService {
 
 	private final RoomRepository roomRepository;
 	private final PlayerRepository playerRepository;
+	private final RoomRedisRepository roomRedisRepository;
+	private final PinCodeAdvisor pinCodeAdvisor;
 
 	@Transactional
 	@Override
@@ -70,6 +81,16 @@ public class RoomServiceV1 implements RoomService {
 		// TODO: players를 MongoDB에서 가져와야 합니다
 		List<Player> players = new ArrayList<>();
 		playerRepository.saveAll(players);
+		return room;
+	}
+
+	@Transactional
+	@Override
+	public RoomDomain createRoom(final String nickname) {
+		String pinCode = pinCodeAdvisor.generateUniquePinCode();
+		PlayerDomain host = PlayerDomain.ofNew(nickname);
+		RoomDomain room = RoomDomain.ofNew(pinCode, host);
+		roomRedisRepository.save(RoomDto.from(room));
 		return room;
 	}
 }
