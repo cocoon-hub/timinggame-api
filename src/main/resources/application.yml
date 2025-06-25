@@ -11,5 +11,6 @@ spring:
     username: ${MYSQL_USER}
     password: ${MYSQL_PASSWORD}
   data:
-    mongodb:
-      uri: ${MONGO_URI}
+    redis:
+      port: ${REDIS_PORT}
+      host: ${REDIS_HOST}
