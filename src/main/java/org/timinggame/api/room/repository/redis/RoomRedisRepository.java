@@ -14,7 +14,7 @@ public class RoomRedisRepository {
 	private final RedisTemplate<String, Object> redisTemplate;
 	private final String PREFIX = "room:";
 
-	public void save(final RoomDto room) {
+	public void save(final RoomDao room) {
 		redisTemplate.opsForValue().set(PREFIX + room.getId(), room);
 	}
 }

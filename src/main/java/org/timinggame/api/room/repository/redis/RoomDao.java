@@ -16,7 +16,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class RoomDto implements Serializable {
+public class RoomDao implements Serializable {
 
 	private String id;
 	private String pinCode;
@@ -26,8 +26,8 @@ public class RoomDto implements Serializable {
 	private LocalDateTime startedAt;
 	private LocalDateTime finishedAt;
 
-	public static RoomDto from(RoomDomain room) {
-		return RoomDto.builder()
+	public static RoomDao from(RoomDomain room) {
+		return RoomDao.builder()
 			.id(room.getId())
 			.pinCode(room.getPinCode())
 			.status(room.getStatus().getValue())
@@ -42,8 +42,8 @@ public class RoomDto implements Serializable {
 	public boolean equals(Object o) {
 		if (o == null || getClass() != o.getClass())
 			return false;
-		RoomDto roomDto = (RoomDto)o;
-		return Objects.equals(getId(), roomDto.getId());
+		RoomDao roomDao = (RoomDao)o;
+		return Objects.equals(getId(), roomDao.getId());
 	}
 
 	@Override

@@ -17,7 +17,7 @@ import org.timinggame.api.room.exception.AlreadyGameStartedException;
 import org.timinggame.api.room.exception.NoPinCodeException;
 import org.timinggame.api.room.exception.NoRoomException;
 import org.timinggame.api.room.exception.RoomExceededException;
-import org.timinggame.api.room.repository.redis.RoomDto;
+import org.timinggame.api.room.repository.redis.RoomDao;
 
 class RoomServiceV1Test extends RoomServiceUnitTest {
 
@@ -172,7 +172,7 @@ class RoomServiceV1Test extends RoomServiceUnitTest {
 
 		// WHEN
 		when(pinCodeAdvisor.generateUniquePinCode()).thenReturn(pinCode);
-		doNothing().when(roomRedisRepository).save(any(RoomDto.class));
+		doNothing().when(roomRedisRepository).save(any(RoomDao.class));
 		RoomDomain actual = roomService.createRoom(nickname);
 
 		// THEN

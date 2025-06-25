@@ -16,7 +16,7 @@ import org.timinggame.api.room.exception.NoPinCodeException;
 import org.timinggame.api.room.exception.NoRoomException;
 import org.timinggame.api.room.exception.RoomExceededException;
 import org.timinggame.api.room.repository.RoomRepository;
-import org.timinggame.api.room.repository.redis.RoomDto;
+import org.timinggame.api.room.repository.redis.RoomDao;
 import org.timinggame.api.room.repository.redis.RoomRedisRepository;
 import org.timinggame.api.room.service.RoomService;
 import org.timinggame.api.room.util.PinCodeAdvisor;
@@ -90,7 +90,7 @@ public class RoomServiceV1 implements RoomService {
 		String pinCode = pinCodeAdvisor.generateUniquePinCode();
 		PlayerDomain host = PlayerDomain.ofNew(nickname);
 		RoomDomain room = RoomDomain.ofNew(pinCode, host);
-		roomRedisRepository.save(RoomDto.from(room));
+		roomRedisRepository.save(RoomDao.from(room));
 		return room;
 	}
 }
