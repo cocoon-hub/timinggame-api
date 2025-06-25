@@ -47,7 +47,7 @@ class PinCodeAdvisorTest {
 
 	@Test
 	void PIN_CODE가_중복되지_않을_때까지_코드를_생성한다() {
-	    // WHEN
+		// WHEN
 		when(redisTemplate.hasKey(anyString()))
 			.thenReturn(true)
 			.thenReturn(false);
