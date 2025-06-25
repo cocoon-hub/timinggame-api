@@ -5,12 +5,19 @@ import static org.mockito.Mockito.*;
 
 import java.time.LocalDateTime;
 import java.util.Optional;
+
 import org.junit.jupiter.api.Test;
 import org.timinggame.api.fixture.RoomFixture;
 import org.timinggame.api.room.RoomServiceUnitTest;
 import org.timinggame.api.room.domain.Room;
+import org.timinggame.api.room.domain.RoomDomain;
 import org.timinggame.api.room.domain.RoomStatus;
-import org.timinggame.api.room.exception.*;
+import org.timinggame.api.room.exception.AlreadyGameFinishedException;
+import org.timinggame.api.room.exception.AlreadyGameStartedException;
+import org.timinggame.api.room.exception.NoPinCodeException;
+import org.timinggame.api.room.exception.NoRoomException;
+import org.timinggame.api.room.exception.RoomExceededException;
+import org.timinggame.api.room.repository.redis.RoomDto;
 
 class RoomServiceV1Test extends RoomServiceUnitTest {
 
@@ -155,5 +162,31 @@ class RoomServiceV1Test extends RoomServiceUnitTest {
 		assertThatThrownBy(() -> roomService.finishGame(roomId))
 			.isInstanceOf(AlreadyGameFinishedException.class)
 			.hasMessage(String.format("%d번 방은 이미 게임이 종료되었습니다.", roomId));
+	}
+
+	@Test
+	void 방장이_게임을_만든다() {
+		// GIVEN
+		final String pinCode = "123456";
+		final String nickname = "호스트";
+
+		// WHEN
+		when(pinCodeAdvisor.generateUniquePinCode()).thenReturn(pinCode);
+		doNothing().when(roomRedisRepository).save(any(RoomDto.class));
+		RoomDomain actual = roomService.createRoom(nickname);
+
+		// THEN
+		assertThat(actual.getId()).isNotNull();
+		assertThat(actual.getStatus()).isEqualTo(RoomStatus.WAITING);
+		assertThat(actual.getPinCode()).isEqualTo(pinCode);
+		assertThat(actual.getCurrentRound()).isZero();
+
+		assertThat(actual.getHost().getId()).isNotNull();
+		assertThat(actual.getHost().getNickname()).isEqualTo(nickname);
+
+		assertThat(actual.getPlayers()).isEmpty();
+
+		assertThat(actual.getStartedAt()).isNull();
+		assertThat(actual.getFinishedAt()).isNull();
 	}
 }
