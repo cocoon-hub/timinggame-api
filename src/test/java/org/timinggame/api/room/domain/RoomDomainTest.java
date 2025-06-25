@@ -12,8 +12,7 @@ class RoomDomainTest {
 	void 방을_만들_때_방장과_입장코드가_필요하다() {
 		// GIVEN
 		final String pinCode = "123456";
-		final String nickname = "호스트";
-		final PlayerDomain host = PlayerDomain.ofNew(nickname);
+		final PlayerDomain host = PlayerDomain.ofNew("호스트");
 
 		// WHEN
 		final RoomDomain room = RoomDomain.ofNew(pinCode, host);
@@ -33,8 +32,7 @@ class RoomDomainTest {
 	@Nested
 	class 게임을_시작할_때 {
 		final String pinCode = "123456";
-		final String nickname = "호스트";
-		final PlayerDomain host = PlayerDomain.ofNew(nickname);
+		final PlayerDomain host = PlayerDomain.ofNew("호스트");
 		final PlayerDomain player1 = PlayerDomain.ofNew("플레이어1");
 		final PlayerDomain player2 = PlayerDomain.ofNew("플레이어2");
 		final PlayerDomain player3 = PlayerDomain.ofNew("플레이어3");
