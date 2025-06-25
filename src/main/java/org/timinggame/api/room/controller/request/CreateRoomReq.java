@@ -1,6 +1,4 @@
-package org.timinggame.api.room.controller.response;
-
-import org.timinggame.api.player.domain.PlayerDomain;
+package org.timinggame.api.room.controller.request;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -12,9 +10,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class CreateRoomRes {
+public class CreateRoomReq {
 
-	private String roomId;
-	private String pinCode;
-	private PlayerDomain host;
+	private String nickname;
 }
