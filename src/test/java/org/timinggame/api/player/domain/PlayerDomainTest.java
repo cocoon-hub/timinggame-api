@@ -8,10 +8,10 @@ class PlayerDomainTest {
 
 	@Test
 	void 플레이어를_만들_때_닉네임이_필요하다() {
-	    // GIVEN
+		// GIVEN
 		final String nickname = "플레이어";
 
-	    // WHEN
+		// WHEN
 		PlayerDomain player = PlayerDomain.ofNew(nickname);
 
 		// THEN
@@ -45,7 +45,6 @@ class PlayerDomainTest {
 		assertThat(player).isNotNull();
 		assertThat(player.isReady()).isTrue();
 	}
-
 
 	@Test
 	void 준비해제하면_준비상태가_거짓이다() {

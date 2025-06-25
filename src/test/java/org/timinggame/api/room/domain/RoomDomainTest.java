@@ -82,7 +82,7 @@ class RoomDomainTest {
 			room.addPlayer(player2);
 			room.addPlayer(player3);
 
-		    // WHEN
+			// WHEN
 			boolean expected = room.start();
 
 			// THEN
