@@ -16,6 +16,7 @@ class PlayerDomainTest {
 
 		// THEN
 		assertThat(player).isNotNull();
+		assertThat(player.getId()).isNotNull();
 		assertThat(player.getNickname()).isEqualTo(nickname);
 	}
 
