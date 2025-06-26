@@ -5,11 +5,14 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.timinggame.api.room.controller.response.CreateRoomRes;
 import org.timinggame.api.room.controller.response.EnterPinCodeRes;
 import org.timinggame.api.room.controller.response.FinishRoomRes;
 import org.timinggame.api.room.controller.response.StartGameRes;
 import org.timinggame.api.room.domain.Room;
+import org.timinggame.api.room.domain.RoomDomain;
 import org.timinggame.api.room.service.RoomService;
 
 import jakarta.validation.constraints.Positive;
@@ -42,5 +45,16 @@ public class RoomController {
 	final Long roomId) {
 		Room room = roomService.finishGame(roomId);
 		return ResponseEntity.ok(FinishRoomRes.builder().loserId(room.getLoserId()).build());
+	}
+
+	@PostMapping("/create")
+	public ResponseEntity<CreateRoomRes> createGame(@RequestParam("nickname")
+	final String nickname) {
+		RoomDomain room = roomService.createRoom(nickname);
+		return ResponseEntity.ok(CreateRoomRes.builder()
+			.roomId(room.getId())
+			.pinCode(room.getPinCode())
+			.host(room.getHost())
+			.build());
 	}
 }
