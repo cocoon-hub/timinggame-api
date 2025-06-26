@@ -16,6 +16,7 @@ public final class PinCodeAdvisor {
 
 	private static final SecureRandom random = new SecureRandom();
 	private static final String PIN_CHARS = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+	private static final String PIN_CODE_PREFIX = "room:pin-code:";
 	private static final int DEFAULT_LENGTH = 6;
 	private static final int MAX_TIMEOUT = 10;
 
@@ -23,13 +24,12 @@ public final class PinCodeAdvisor {
 
 	public String generateUniquePinCode() {
 		String pinCode;
-		String redisKeyPrefix = "room:pin-code:";
 
 		do {
 			pinCode = generatePinCode(DEFAULT_LENGTH);
-		} while (redisTemplate.hasKey(redisKeyPrefix + pinCode));
+		} while (redisTemplate.hasKey(PIN_CODE_PREFIX + pinCode));
 
-		redisTemplate.opsForValue().set(redisKeyPrefix + pinCode, "reserved", MAX_TIMEOUT, TimeUnit.MINUTES);
+		redisTemplate.opsForValue().set(PIN_CODE_PREFIX + pinCode, "reserved", MAX_TIMEOUT, TimeUnit.MINUTES);
 
 		return pinCode;
 	}
