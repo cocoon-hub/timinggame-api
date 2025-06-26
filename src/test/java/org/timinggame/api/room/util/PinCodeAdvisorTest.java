@@ -27,7 +27,7 @@ class PinCodeAdvisorTest {
 	@Mock
 	private ValueOperations<String, Object> valueOperations;
 
-	private String PIN_CODE_PREFIX = "room:pin-code:";
+	private static String PIN_CODE_PREFIX = "room:pin-code:";
 
 	@BeforeEach
 	void setUp() {
