@@ -202,7 +202,6 @@ class RoomControllerTest extends RoomControllerUnitTest {
 		mockMvc.perform(post(CREATE_ROOM_URL)
 			.param("nickname", nickname))
 			.andExpect(status().isOk())
-			.andExpect(status().isOk())
 			.andExpect(jsonPath("$.roomId").value(expected.getId()))
 			.andExpect(jsonPath("$.pinCode").value(expected.getPinCode()))
 			.andExpect(jsonPath("$.host.id").value(expected.getHost().getId()))
