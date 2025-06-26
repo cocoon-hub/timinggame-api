@@ -27,6 +27,8 @@ class PinCodeAdvisorTest {
 	@Mock
 	private ValueOperations<String, Object> valueOperations;
 
+	private String PIN_CODE_PREFIX = "room:pin-code:";
+
 	@BeforeEach
 	void setUp() {
 		when(redisTemplate.opsForValue()).thenReturn(valueOperations);
@@ -42,8 +44,8 @@ class PinCodeAdvisorTest {
 
 		// THEN
 		assertThat(pinCode).hasSize(6);
-		verify(redisTemplate).hasKey("room:pin-code:" + pinCode);
-		verify(valueOperations).set("room:pin-code:" + pinCode, "reserved", 10, TimeUnit.MINUTES);
+		verify(redisTemplate).hasKey(PIN_CODE_PREFIX + pinCode);
+		verify(valueOperations).set(PIN_CODE_PREFIX + pinCode, "reserved", 10, TimeUnit.MINUTES);
 	}
 
 	@Test
@@ -57,7 +59,7 @@ class PinCodeAdvisorTest {
 		String pinCode = pinCodeAdvisor.generateUniquePinCode();
 
 		// THEN
-		verify(redisTemplate, times(1)).hasKey("room:pin-code:" + pinCode);
+		verify(redisTemplate, times(1)).hasKey(PIN_CODE_PREFIX + pinCode);
 	}
 
 	@RepeatedTest(20)
