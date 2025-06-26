@@ -14,11 +14,11 @@ import lombok.extern.slf4j.Slf4j;
 @RequiredArgsConstructor
 public final class PinCodeAdvisor {
 
-	private static final SecureRandom random = new SecureRandom();
-	private static final String PIN_CHARS = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-	private static final String PIN_CODE_PREFIX = "room:pin-code:";
-	private static final int DEFAULT_LENGTH = 6;
-	private static final int MAX_TIMEOUT = 10;
+	private final SecureRandom random = new SecureRandom();
+	private final String PIN_CHARS = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+	private final String PIN_CODE_PREFIX = "room:pin-code:";
+	private final int DEFAULT_LENGTH = 6;
+	private final int MAX_TIMEOUT = 10;
 
 	private final RedisTemplate<String, Object> redisTemplate;
 
